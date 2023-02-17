@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 import json
 from . import check_url
@@ -6,15 +7,14 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def processing_url(request):
-    global data_dict
+    global res
     if request.method == 'POST':
-        try:
-            link = request.POST.get("url")
-            stats = check_url.check_link(link)
-        except:
-            return "Empty Dictionary error"
+        data = json.loads(request.body.decode('utf-8'))
+        if isinstance(data, dict):
+            url = data.get('url', None)
+            if url is not None:
+                res = check_url.check_link(url)
+        else:
+            return f'Link verification error'
 
-    if len(stats) == 0:
-        return "Link verification error"
-
-    return stats
+    return HttpResponse(res)
