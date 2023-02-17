@@ -1,6 +1,7 @@
 from django.urls import path, include
+from . import views
 
 
 urlpatterns = [
-    path('url/', include("url.urls"))
+    path('url/', views.processing_url)
 ]
