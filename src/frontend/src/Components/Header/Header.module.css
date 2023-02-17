@@ -1,0 +1,36 @@
+.header {
+    background-color: var(--color1);
+    width: 100%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: var(--containerWidth);
+    height: 40px;
+}
+
+.navbarList {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px
+}
+
+.navbarItem,
+.navbarItem>a {
+    font-family: var(--textFont);
+    font-weight: bolder;
+    color: var(--color4);
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.navbarItem>a:hover {
+    color: var(--color3);
+}
