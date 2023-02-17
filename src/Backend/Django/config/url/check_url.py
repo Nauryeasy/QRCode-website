@@ -11,7 +11,9 @@ def check_link(link):
         'ssl': False,
         'suspicious': False,
         'solution': False,
-        'suspicious_js': False
+        'suspicious_js': False,
+        'Long level': False,
+        'Unreadability': False
              }
 
     response = requests.get(link)
@@ -41,7 +43,17 @@ def check_link(link):
     except:
         pass
 
-    if re.search(r'(paypal|ebay|amazon|google|facebook|twitter|telegram)', link):
+#    if re.search(r'(paypal|ebay|amazon|google|facebook|twitter|telegram)', link):
+#        stats['suspicious'] = True
+
+    if any(site in link for site in ['google', 'facebook', 'amazon', 'twitter', 'linkedin']):
         stats['suspicious'] = True
+
+    if len(link.split('.')) > 4:
+        stats['Long level'] = True
+
+    # Check if the domain name contains an unreadable sequence
+    if any(char in link for char in ['xn--', 'xn----', 'xn------']):
+        stats['Unreadability'] = True
 
     return stats

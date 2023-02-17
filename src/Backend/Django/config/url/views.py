@@ -12,7 +12,10 @@ def processing_url(request):
         url = request.POST.get('url')
         print(url)
         if url is not None:
-            res = check_url.check_link(url)
+            try:
+                res = check_url.check_link(url)
+            except:
+                return f'Invalid link'
         else:
             return f'Link verification error'
 
