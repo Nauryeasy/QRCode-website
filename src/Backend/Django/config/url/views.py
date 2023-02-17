@@ -1,8 +1,10 @@
 from django.shortcuts import render
 import json
 from . import check_url
+from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 def processing_url(request):
     global data_dict
     if request.method == 'POST':
