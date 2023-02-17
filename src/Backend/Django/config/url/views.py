@@ -9,14 +9,14 @@ from django.views.decorators.csrf import csrf_exempt
 def processing_url(request):
     global res
     if request.method == 'POST':
-        url = request.POST.get('url')
-        print(url)
-        if url is not None:
-            try:
-                res = check_url.check_link(url)
-            except:
-                return f'Invalid link'
-        else:
+        try:
+            url = request.POST.get('url')
+        except AttributeError:
             return f'Link verification error'
+
+        try:
+            res = check_url.check_link(url)
+        except:
+            return f'Invalid link'
 
     return JsonResponse(res)
