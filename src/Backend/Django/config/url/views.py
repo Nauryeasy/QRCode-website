@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render
 import json
 from . import check_url
@@ -12,11 +12,11 @@ def processing_url(request):
         try:
             url = request.POST.get('url')
         except AttributeError:
-            return f'Link verification error'
+            return HttpResponseBadRequest('Link verification error')
 
         try:
             res = check_url.check_link(url)
         except:
-            return f'Invalid link'
+            return HttpResponseBadRequest("Invalid link")
 
     return JsonResponse(res)
