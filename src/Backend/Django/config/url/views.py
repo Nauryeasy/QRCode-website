@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 import json
 from . import check_url
@@ -16,4 +16,4 @@ def processing_url(request):
         else:
             return f'Link verification error'
 
-    return HttpResponse(res)
+    return JsonResponse(res)

@@ -1,22 +1,38 @@
 import requests
 import re
+import jsbeautifier
 
 
-# Define a function to check a link for suspicious parameters
 def check_link(link):
-    # Initialize a dictionary to store statistics
-    stats = {'redirect': False, 'https': False, 'ssl': False, 'suspicious': False}
 
-    # Send a HEAD request to the link to check for redirects
+    stats = {
+        'redirect': False,
+        'https': False,
+        'ssl': False,
+        'suspicious': False,
+        'solution': False,
+        'suspicious_js': False
+             }
+
+    response = requests.get(link)
+    content_type = response.headers['content-type']
+
+    js_code = response.text
+    beautified_js = jsbeautifier.beautify(js_code)
+
     response = requests.head(link, allow_redirects=False)
     if response.status_code in (301, 302):
         stats['redirect'] = True
 
-    # Check for HTTPS support
+    if "eval(" in js_code or "document.location.replace(" in js_code:
+        stats['suspicious_js'] = True
+
+    if 'application/octet-stream' in content_type or '.exe' in link or '.dll' in link:
+        stats["solution"] = True
+
     if link.startswith('https://'):
         stats['https'] = True
 
-    # Check for SSL certificate
     try:
         response = requests.get(link)
         cert = response.connection.sock.getpeercert()
@@ -25,21 +41,7 @@ def check_link(link):
     except:
         pass
 
-    # Check for suspicious URL parameters
     if re.search(r'(paypal|ebay|amazon|google|facebook|twitter|telegram)', link):
         stats['suspicious'] = True
 
     return stats
-
-
-# Define a function to display link statistics
-def display_stats(link):
-    # Check the link for suspicious parameters
-    stats = check_link(link)
-
-    # Display statistics
-    print("Statistics for", link)
-    print("Redirect:", stats['redirect'])
-    print("HTTPS:", stats['https'])
-    print("SSL:", stats['ssl'])
-    print("Suspicious:", stats['suspicious'])
