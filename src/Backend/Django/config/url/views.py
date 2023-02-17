@@ -1,22 +1,22 @@
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render
 import json
-from src.Backend.Scripts.check_url import check_link
+from . import check_url
+from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 def processing_url(request):
-    link = ""
+    global res
     if request.method == 'POST':
-        json_data = request.body.decode('utf-8')
-        data_dict = json.loads(json_data)
+        try:
+            url = request.POST.get('url')
+        except AttributeError:
+            return HttpResponseBadRequest('Link verification error')
 
-    link = data_dict["url"]
+        try:
+            res = check_url.check_link(url)
+        except:
+            return HttpResponseBadRequest("Invalid link")
 
-    try:
-        stats = check_link(link)
-    except:
-        return "Error"
-
-    if len(stats) == 0:
-        return "Error"
-
-    return stats
+    return JsonResponse(res)
