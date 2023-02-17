@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import json
-from src.Backend.Scripts.check_url import check_link
+from . import check_url
 
 
 def processing_url(request):
@@ -11,7 +11,7 @@ def processing_url(request):
 
     try:
         link = data_dict["url"]
-        stats = check_link(link)
+        stats = check_url.check_link(link)
     except:
         return "Empty Dictionary error"
 
