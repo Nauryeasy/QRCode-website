@@ -1,3 +1,4 @@
 from django.contrib import admin
+from .models import  notable_links
 
-# Register your models here.
+admin.site.register(notable_links)
