@@ -20,7 +20,7 @@ const QRChecker = () => {
         axios
             .post(process.env.REACT_APP_QR_SEND_ADDRESS, formData, {
                 headers: {
-                    "Content-Type": "multipart/form-data",
+                    "Content-Type": "application/x-www-form-urlencoded",
                 },
             })
             .then((response) => {
