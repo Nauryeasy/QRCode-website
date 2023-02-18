@@ -1,6 +1,8 @@
 import requests
 import re
 import jsbeautifier
+import ssl
+import socket
 
 
 def check_link(link):
@@ -35,13 +37,17 @@ def check_link(link):
     if link.startswith('https://'):
         stats['https'] = True
 
-    try:
-        response = requests.get(link)
-        cert = response.connection.sock.getpeercert()
-        if cert:
-            stats['ssl'] = True
-    except:
-        pass
+    response.raise_for_status()
+    url = response.url
+    domain = url.split('//')[1].split('/')[0]
+    context = ssl.create_default_context()
+    with socket.create_connection((domain, 443)) as sock:
+        with context.wrap_socket(sock, server_hostname=domain) as ssl_sock:
+            cert = ssl_sock.getpeercert()
+            if cert:
+                stats['ssl'] = True
+            else:
+                stats['ssl'] = False
 
 #    if re.search(r'(paypal|ebay|amazon|google|facebook|twitter|telegram)', link):
 #        stats['suspicious'] = True
