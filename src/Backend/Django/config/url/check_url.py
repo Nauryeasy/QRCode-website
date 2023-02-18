@@ -1,65 +1,51 @@
 import requests
-import re
-import jsbeautifier
-import ssl
 import socket
+import ssl
 
+def is_redirect(link):
+    response = requests.head(link, allow_redirects=False)
+    return response.status_code in (301, 302)
 
-def check_link(link):
+def has_suspicious_js(link):
+    response = requests.get(link)
+    js_code = response.text
+    return "eval(" in js_code or "document.location.replace(" in js_code
 
-    stats = {
-        'redirect': False,
-        'https': False,
-        'ssl': False,
-        'suspicious': False,
-        'solution': False,
-        'suspicious_js': False,
-        'Long level': False,
-        'Unreadability': False
-             }
-
+def is_solution(link):
     response = requests.get(link)
     content_type = response.headers['content-type']
+    return 'application/octet-stream' in content_type or '.exe' in link or '.dll' in link
 
-    js_code = response.text
-    beautified_js = jsbeautifier.beautify(js_code)
+def is_https(link):
+    return link.startswith('https://')
 
-    response = requests.head(link, allow_redirects=False)
-    if response.status_code in (301, 302):
-        stats['redirect'] = True
-
-    if "eval(" in js_code or "document.location.replace(" in js_code:
-        stats['suspicious_js'] = True
-
-    if 'application/octet-stream' in content_type or '.exe' in link or '.dll' in link:
-        stats["solution"] = True
-
-    if link.startswith('https://'):
-        stats['https'] = True
-
-    response.raise_for_status()
-    url = response.url
+def has_ssl_cert(link):
+    url = requests.head(link).url
     domain = url.split('//')[1].split('/')[0]
     context = ssl.create_default_context()
     with socket.create_connection((domain, 443)) as sock:
         with context.wrap_socket(sock, server_hostname=domain) as ssl_sock:
             cert = ssl_sock.getpeercert()
-            if cert:
-                stats['ssl'] = True
-            else:
-                stats['ssl'] = False
+            return bool(cert)
 
-#    if re.search(r'(paypal|ebay|amazon|google|facebook|twitter|telegram)', link):
-#        stats['suspicious'] = True
+def is_suspicious(link):
+    return any(site in link for site in ['google', 'facebook', 'amazon', 'twitter', 'linkedin', 'youtube'])
 
-    if any(site in link for site in ['google', 'facebook', 'amazon', 'twitter', 'linkedin']):
-        stats['suspicious'] = True
+def is_long_level(link):
+    return len(link.split('.')) > 4
 
-    if len(link.split('.')) > 4:
-        stats['Long level'] = True
+def is_unreadable(link):
+    return any(char in link for char in ['xn--', 'xn----', 'xn------'])
 
-    # Check if the domain name contains an unreadable sequence
-    if any(char in link for char in ['xn--', 'xn----', 'xn------']):
-        stats['Unreadability'] = True
-
+def check_link(link):
+    stats = {
+        'redirect': is_redirect(link),
+        'https': is_https(link),
+        'ssl': has_ssl_cert(link),
+        'suspicious': is_suspicious(link),
+        'solution': is_solution(link),
+        'suspicious_js': has_suspicious_js(link),
+        'Long level': is_long_level(link),
+        'Unreadability': is_unreadable(link)
+    }
     return stats

@@ -8,5 +8,5 @@ def get_link_qr_code():
     data = decode(img)
 
     link = data[0].data.decode("utf-8")
-    return link
 
+    return link

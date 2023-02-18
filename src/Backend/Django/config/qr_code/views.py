@@ -1,6 +1,4 @@
 from django.http import JsonResponse, HttpResponseBadRequest
-from django.shortcuts import render
-import json
 from . import check_url
 from django.views.decorators.csrf import csrf_exempt
 from . import get_qr_code
