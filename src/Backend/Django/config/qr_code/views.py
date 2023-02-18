@@ -1,5 +1,4 @@
 from django.http import JsonResponse, HttpResponseBadRequest
-from . import check_url
 from django.views.decorators.csrf import csrf_exempt
 from . import get_qr_code
 from . import tranlete_qr_code
@@ -20,11 +19,4 @@ def processing_url(request):
                 url = tranlete_qr_code.get_link_qr_code()
             except:
                 return JsonResponse({"error": 'Invalid QR-code'})
-            if len(url) == 0:
-                return JsonResponse({"error": 'Link is null error'})
-            else:
-                try:
-                    res = check_url.check_link(url)
-                except:
-                    return JsonResponse({"error": "Invalid link"})
-    return JsonResponse(res)
+    return JsonResponse({'url': url})
