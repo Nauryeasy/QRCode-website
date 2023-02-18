@@ -26,7 +26,7 @@ const URLChecker = () => {
     }
     function onAcceptURL() {
         if (!isValidURL || input === "")
-            return NotificationManager.error("nt", "Пиздец ты умный");
+            return NotificationManager.error("Пустой URL", "Ошибка");
         console.log(input);
         axios
             .post(
