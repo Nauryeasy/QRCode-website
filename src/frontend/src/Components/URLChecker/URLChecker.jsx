@@ -17,7 +17,7 @@ const URLChecker = () => {
         }
     }
     function onOk(res) {
-        NotificationManager.success('Запросы был отправлен', "Успех");
+        NotificationManager.success("Запросы был отправлен", "Успех");
         console.log(res);
     }
     function onError(err) {
@@ -25,12 +25,21 @@ const URLChecker = () => {
         console.log(err);
     }
     function onAcceptURL() {
-        if (!isValidURL || input === '') return NotificationManager.error('nt',"Пиздец ты умный");
-        console.log(input)
+        if (!isValidURL || input === "")
+            return NotificationManager.error("nt", "Пиздец ты умный");
+        console.log(input);
         axios
-            .post(process.env.REACT_APP_URL_SEND_ADDRESS, {
-                url: input,
-            })
+            .post(
+                process.env.REACT_APP_URL_SEND_ADDRESS,
+                {
+                    url: input,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                },
+            )
             .then((response) => {
                 onOk(response);
             })
