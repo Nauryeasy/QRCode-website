@@ -13,3 +13,5 @@ def get_png_from_blob(link):
     png_img = img.convert("RGBA")
 
     png_img.save("image.png", format="PNG")
+
+print(get_png_from_blob("https://droidspace.ru/wp-content/uploads/2021/10/generator-qr-koda-onlajn.png"))
