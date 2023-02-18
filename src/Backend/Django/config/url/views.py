@@ -18,23 +18,15 @@ def processing_url(request):
         else:
             for link in link_list:
                 if link.url == url:
-                    flag = False
-                    need_reviews = {}
-                    reviews_list = reviews.objects.all()
-                    for i in range(len(reviews_list)):
-                        if reviews_list[i].id_url == link.id:
-                            review = {
-                                "email": reviews_list[i].email_author,
-                                "comment": reviews_list[i].review
-                            }
-                            need_reviews.update({f"{i}": review})
-                    break
+                    flag, need_reviews, reviews_list = False, {}, reviews.objects.filter(id_url=link.id)
+                    need_reviews = {str(i): {"email": review.email_author, "comment": review.review} for i, review in
+                                    enumerate(reviews_list)}
+                break
             if flag:
-                new_url = notable_links(
+                new_url, need_reviews = notable_links(
                     url=url
-                )
+                ), []
                 new_url.save()
-                need_reviews = []
             try:
                 res = check_url.check_link(url)
             except:
