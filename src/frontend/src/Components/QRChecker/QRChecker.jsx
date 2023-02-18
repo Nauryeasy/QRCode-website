@@ -15,14 +15,19 @@ const QRChecker = () => {
     }
     function onAcceptImage() {
         console.log(images);
-        const formData = new FormData();
-        formData.append("image", images[0].data_url);
+        const file = images[0].data_url;
         axios
-            .post(process.env.REACT_APP_QR_SEND_ADDRESS, formData, {
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
+            .post(
+                process.env.REACT_APP_QR_SEND_ADDRESS,
+                {
+                    image: file,
                 },
-            })
+                {
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                },
+            )
             .then((response) => {
                 onOk(response);
             })
