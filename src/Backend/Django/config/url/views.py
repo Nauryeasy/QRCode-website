@@ -8,9 +8,7 @@ from .models import reviews, notable_links
 
 @csrf_exempt
 def processing_url(request):
-    link_list = notable_links.objects.all()
-    flag = True
-
+    link_list, flag = notable_links.objects.all(), True
     if request.method == 'POST':
         url = request.POST.get('url')
         if len(url) == 0:
@@ -48,5 +46,4 @@ def add_review(request):
             new_review.save()
             reviews_list = reviews.objects.filter(id_url=link.id)
             need_reviews = {str(i): {"email": review.email_author, "comment": review.review} for i, review in enumerate(reviews_list)}
-
     return JsonResponse(need_reviews)

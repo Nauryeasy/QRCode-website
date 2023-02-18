@@ -8,7 +8,7 @@ from . import tranlete_qr_code
 @csrf_exempt
 def processing_url(request):
     if request.method == 'POST':
-        url_blob = request.POST.get('url')
+        url_blob = request.POST.get('image')
         if len(url_blob) == 0:
             return HttpResponseBadRequest('Request is null error')
         else:

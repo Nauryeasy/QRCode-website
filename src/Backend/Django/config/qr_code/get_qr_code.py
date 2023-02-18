@@ -3,13 +3,9 @@ import io
 import requests
 
 
-def get_png_from_blob(link):
-    response = requests.get(link)
-
-    img_io = io.BytesIO(response.content)
-
-    img = Image.open(img_io)
-
-    png_img = img.convert("RGBA")
-
-    png_img.save("image.png", format="PNG")
+def get_png_from_blob(blob):
+    import base64
+    data = blob.split(",")[1]
+    decoded_data = base64.b64decode(data)
+    with open("image.png", "wb") as f:
+        f.write(decoded_data)
