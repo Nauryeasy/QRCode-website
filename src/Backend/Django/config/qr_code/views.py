@@ -10,21 +10,21 @@ def processing_url(request):
     if request.method == 'POST':
         url_blob = request.POST.get('image')
         if len(url_blob) == 0:
-            return HttpResponseBadRequest('Request is null error')
+            return JsonResponse({"error": 'Request is null error'})
         else:
             try:
                 get_qr_code.get_png_from_blob(url_blob)
             except:
-                return HttpResponseBadRequest('Invalid blob')
+                return JsonResponse({"error": 'Invalid blob'})
             try:
                 url = tranlete_qr_code.get_link_qr_code()
             except:
-                return HttpResponseBadRequest('Invalid QR-code')
+                return JsonResponse({"error": 'Invalid QR-code'})
             if len(url) == 0:
-                return HttpResponseBadRequest('Link is null error')
+                return JsonResponse({"error": 'Link is null error'})
             else:
                 try:
                     res = check_url.check_link(url)
                 except:
-                    return HttpResponseBadRequest("Invalid link")
+                    return JsonResponse({"error": "Invalid link"})
     return JsonResponse(res)

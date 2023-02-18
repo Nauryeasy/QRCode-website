@@ -12,7 +12,7 @@ def processing_url(request):
     if request.method == 'POST':
         url = request.POST.get('url')
         if len(url) == 0:
-            return HttpResponseBadRequest('Link is null error')
+            return JsonResponse({"error": 'Link is null error'})
         else:
             for link in link_list:
                 if link.url == url:
@@ -28,8 +28,9 @@ def processing_url(request):
             try:
                 res = check_url.check_link(url)
             except:
-                return HttpResponseBadRequest("Invalid link")
-    return JsonResponse({"statistic": res, "reviews": need_reviews})
+                return JsonResponse({"error": "Invalid link"})
+        a = len(need_reviews)
+    return JsonResponse({"statistic": res, "reviews": need_reviews, "count_reviews": a})
 
 
 @csrf_exempt
