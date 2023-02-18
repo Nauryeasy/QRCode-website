@@ -52,7 +52,6 @@ def check_link(link):
     if len(link.split('.')) > 4:
         stats['Long level'] = True
 
-    # Check if the domain name contains an unreadable sequence
     if any(char in link for char in ['xn--', 'xn----', 'xn------']):
         stats['Unreadability'] = True
 
