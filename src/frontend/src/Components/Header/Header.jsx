@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import classes from "./Header.module.css";
 
 // navbar: [
@@ -14,8 +14,8 @@ const Header = ({ navbar }) => {
             <div className={classes.container}>
                 <ul className={classes.navbarList}>
                     {navbar.map((elem) => (
-                        <li className={classes.navbarItem}>
-                            <Link key={elem.title} to={elem.link}>{elem.title}</Link>
+                        <li key={elem.title} className={classes.navbarItem}>
+                            <NavLink to={elem.link}>{elem.title}</NavLink>
                         </li>
                     ))}
                 </ul>

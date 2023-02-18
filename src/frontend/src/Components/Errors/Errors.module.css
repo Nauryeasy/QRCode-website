@@ -1,9 +1,0 @@
-.error {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: lightcoral;
-    color: white;
-    position: fixed;
-    bottom: 0;
-}
