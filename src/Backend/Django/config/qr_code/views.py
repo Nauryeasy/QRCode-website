@@ -11,15 +11,10 @@ from . import tranlete_qr_code
 def processing_url(request):
     if request.method == 'POST':
         url_blob = request.POST.get('url')
-        try:
-            get_qr_code.get_png_from_blob(url_blob)
-        except:
-            pass # Исключение
 
-        try:
-            url = tranlete_qr_code.get_link_qr_code()
-        except:
-            pass # Исключение
+        get_qr_code.get_png_from_blob(url_blob)
+
+        url = tranlete_qr_code.get_link_qr_code()
 
         if len(url) == 0:
             return HttpResponseBadRequest('Link is null error')
