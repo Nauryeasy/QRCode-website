@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import classes from "./SendReviewPanel.module.css";
 import { NotificationManager } from "react-notifications";
 import { postReview } from "../../utils/http";
 
-const SendReviewPanel = ({ url, SendReviewPanel }) => {
+const SendReviewPanel = ({ url, StatesSendReviewPanel }) => {
     const {
         email,
         setEmail,
@@ -13,7 +13,8 @@ const SendReviewPanel = ({ url, SendReviewPanel }) => {
         setIsValidEmail,
         reviewsState,
         setReviewsState,
-    } = SendReviewPanel;
+    } = StatesSendReviewPanel;
+    
 
     useEffect(() => {
         const timeOutId = setTimeout(() => {
@@ -34,7 +35,7 @@ const SendReviewPanel = ({ url, SendReviewPanel }) => {
     }
 
     function onError(err) {
-        NotificationManager.error(String(err), "Ошибка");
+        NotificationManager.error('Что-то пошло не так', "Ошибка");
     }
 
     function addReview(url, email, text) {
@@ -49,6 +50,7 @@ const SendReviewPanel = ({ url, SendReviewPanel }) => {
             return NotificationManager.error("Пустое сообщение", "Ошибка");
         postReview(url, email, text, onOk, onError);
     }
+
     function checkIsValidEmail(email) {
         const expression = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/gi;
         const regex = new RegExp(expression);
@@ -59,6 +61,7 @@ const SendReviewPanel = ({ url, SendReviewPanel }) => {
             return false;
         }
     }
+
     return (
         <div className={classes.sendOurReviewWrapper}>
             <div className={classes.ourReviewTitle}>Оставьте свой отзыв:</div>

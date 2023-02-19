@@ -67,7 +67,7 @@ const URLChecker = ({setReviewsState}) => {
     // При ошибке во время отправления запроса
     function onError(err) {
         setIsLoading(false);
-        NotificationManager.error(String(err), "Ошибка");
+        NotificationManager.error('Что-то пошло не так', "Ошибка");
     }
 
     // При нажатии на кнопку отправления

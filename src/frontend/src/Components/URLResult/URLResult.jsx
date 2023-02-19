@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Pagination from "../../UI/Pagination/Pagination";
-import Comments from "../../UI/Pagination/Pagination";
-import ReviewPane from "../../UI/ReviewPane/ReviewPane";
 import StatisticPane from "../../UI/StatisticPane/StatisticPane";
-import { NotificationManager } from "react-notifications";
-import axios from "axios";
 import classes from "./URLResult.module.css";
-import { postReview } from "../../utils/http";
-import SendReviewPanel from "../../UI/SendReviewPanel/SendReviewPanel";
 import useSendReviewPanel from "../../hooks/useSendReviewPanel";
+import SendReviewPanel from "../../UI/SendReviewPanel/SendReviewPanel";
 
 // Страница с результатами анализа URL
 const URLResult = () => {
@@ -18,7 +13,7 @@ const URLResult = () => {
     const reviews = JSON.parse(params.get("reviews"));
     const url = JSON.parse(params.get("url"));
 
-    const {email, setEmail,text, setText,isValidEmail, setIsValidEmail,reviewsState, setReviewsState} = useSendReviewPanel(reviews);
+    const StatesSendReviewPanel = useSendReviewPanel(reviews);
 
     return (
         <div className={classes.wrapper}>
@@ -71,14 +66,14 @@ const URLResult = () => {
             <div className={classes.reviewsWrapper}>
                 <div className={classes.reviewsTitle}>
                     Отзывы людей об этом URL (всего:{" "}
-                    {reviewsState.length}):
+                    {StatesSendReviewPanel.reviewsState.length}):
                 </div>
-                {reviewsState.length !== 0 ? (
-                    <Pagination data={reviewsState} />
+                {StatesSendReviewPanel.reviewsState.length !== 0 ? (
+                    <Pagination data={StatesSendReviewPanel.reviewsState} />
                 ) : (
                     <div className={classes.noreviews}>Пока отзывов нет</div>
                 )}
-                <SendReviewPanel url={url} SendReviewPanel={SendReviewPanel} />
+                <SendReviewPanel url={url} StatesSendReviewPanel={StatesSendReviewPanel} />
             </div>
         </div>
     );

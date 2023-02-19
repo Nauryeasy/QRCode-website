@@ -26,7 +26,7 @@ const QRChecker = () => {
         const reviews = res.data.reviews;
         const count_reviews = res.data.count_reviews;
         const file = images[0].data_url;
-        
+
         // Перекинуть пользователя на страницу, где показываются результаты анализа
         navigate(
             "/URLResult?statistic=" +
@@ -51,7 +51,7 @@ const QRChecker = () => {
     // При любой ошибке во время отправления запроса
     function onError(err) {
         setIsLoading(false);
-        NotificationManager.error(String(err), "Ошибка");
+        NotificationManager.error('Что-то пошло не так', "Ошибка");
     }
     
     // При нажатии на кнопку "Отправить"

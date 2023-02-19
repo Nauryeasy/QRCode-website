@@ -13,7 +13,7 @@ const Footer = () => {
                     <span>Karavaev Ivan (BackEnd)</span>
                 </div>
 
-                <div className={classes.telegramBot}>Telegram Bot</div>
+                <a target="_blank" href="https://t.me/phone_defender_bot" className={classes.telegramBot}>Telegram Bot</a>
                 
                 <div className={classes.stack}>
                     <span>Django</span> (Python), <span>SQLite</span>,{" "}
