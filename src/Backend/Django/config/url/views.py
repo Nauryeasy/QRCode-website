@@ -59,6 +59,8 @@ def add_review(request):
                     flag = False
                 else:
                     return JsonResponse({"error": "Second review error"})
+    else:
+        return JsonResponse({'error': 'Invalid email'})
     if flag:
         return JsonResponse({'error': 'Dont found url'})
     return JsonResponse({'error': 'Add ok!'})
