@@ -1,9 +1,11 @@
+from django.db.models import QuerySet
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render
 import json
 from . import check_url
 from django.views.decorators.csrf import csrf_exempt
 from .models import reviews, notable_links
+from .validate_email import validate_email
 
 
 @csrf_exempt
@@ -30,6 +32,8 @@ def processing_url(request):
             except:
                 return JsonResponse({"error": "Invalid link"})
         a = len(need_reviews)
+    print(res)
+    print(need_reviews)
     return JsonResponse({"statistic": res, "reviews": need_reviews, "count_reviews": a})
 
 
@@ -38,18 +42,25 @@ def add_review(request):
     flag = True
     review_data = request.POST
     links_list = notable_links.objects.all()
-    for link in links_list:
-        if review_data.get("url") == link.url:
-            try:
-                new_review = reviews(
-                    id_url=link.id,
-                    email_author=review_data.get("email"),
-                    review=review_data.get("review")
-                )
-                new_review.save()
-            except:
-                return JsonResponse({'error': 'Invalid form'})
-            flag = False
+    if validate_email(f'{review_data.get("email")}'):
+        for link in links_list:
+            if review_data.get("url") == link.url:
+                is_upload = reviews.objects.filter(email_author=review_data.get("email"), id_url=link.id)
+                if len(is_upload) == 0:
+                    try:
+                        new_review = reviews(
+                            id_url=link.id,
+                            email_author=review_data.get("email"),
+                            review=review_data.get("review")
+                        )
+                        new_review.save()
+                    except:
+                        return JsonResponse({'error': 'Invalid form'})
+                    flag = False
+                else:
+                    return JsonResponse({"error": "Second review error"})
+    else:
+        return JsonResponse({'error': 'Invalid email'})
     if flag:
         return JsonResponse({'error': 'Dont found url'})
     return JsonResponse({'error': 'Add ok!'})
