@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import ImageUploading from "react-images-uploading";
 import classes from "./ImageUploader.module.css";
 export function ImageUploader({ images, setImages, onImageOk }) {
     const maxNumber = 69;
-
+    const width = useRef(window.innerWidth).current;
+    console.log(width)
     const onChange = (imageList, addUpdateIndex) => {
         setImages(imageList);
     };
@@ -35,9 +36,9 @@ export function ImageUploader({ images, setImages, onImageOk }) {
                                     <span>Отпустите</span>
                                 ) : (
                                     <span className={classes.text}>
-                                        Перетащите фото с QR-кодом в эту область
-                                        или нажмите на нее, чтобы выбрать
-                                        самостоятельно
+                                        {width >= 750
+                                            ? "Перетащите фото с QR-кодом в эту область или нажмите на нее, чтобы выбрать самостоятельно"
+                                            : "Нажмите на выделенную область, чтобы загрузить фото"}
                                     </span>
                                 )}
                             </button>

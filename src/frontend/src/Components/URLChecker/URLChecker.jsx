@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import classes from "./URLChecker.module.css";
 import { NotificationManager } from "react-notifications";
 import axios from "axios";
+import { isLoadingContext } from "../../context";
+import { Navigate } from "react-router-dom";
+import LoadingScreen from "../../UI/LoadingScreen/LoadingScreen";
 const URLChecker = () => {
     const [input, setInput] = useState("");
     const [isValidUrl, setIsValidUrl] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     function isValidURL(url) {
         const expression =
             /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
@@ -17,17 +21,21 @@ const URLChecker = () => {
         }
     }
     function onOk(res) {
-        NotificationManager.success("Запросы был отправлен", "Успех");
-        console.log(res);
+        console.log(res.data)
+        setIsLoading(false);
+        if (!res.data) return NotificationManager.error("Пустой ответ ¯\_(ツ)_/¯", "Ошибка");
+        const statistic = res.data.statistic;
+        const reviews = res.data.reviews;
+        const count_reviews = res.data.count_reviews;
     }
     function onError(err) {
+        setIsLoading(false);
         NotificationManager.error(String(err), "Ошибка");
-        console.log(err);
     }
     function onAcceptURL() {
         if (!isValidURL || input === "")
             return NotificationManager.error("Пустой URL", "Ошибка");
-        console.log(input);
+        setIsLoading(true);
         axios
             .post(
                 process.env.REACT_APP_URL_SEND_ADDRESS,
@@ -81,6 +89,7 @@ const URLChecker = () => {
                     {isValidUrl ? "➤" : "✕"}
                 </button>
             </div>
+            {isLoading && <LoadingScreen></LoadingScreen>}
         </div>
     );
 };

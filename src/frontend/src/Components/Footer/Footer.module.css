@@ -1,0 +1,98 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer {
+    background-color: var(--color3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    max-width: var(--containerWidth);
+    width: 100%;
+    padding: 0 20px;
+}
+
+.contacts {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--textFont);
+    line-height: 1.1em;
+}
+
+.contacts span {
+    font-size: 0.8em;
+}
+
+.contacts b {
+    font-size: 0.9em;
+    color: var(--color1)
+}
+
+
+.stack {
+    color: var(--color0);
+    font-family: var(--textFont);
+    font-size: 0.9em;
+}
+
+.stack > span {
+    color: var(--color1);
+    font-weight: 400;
+    font-size: 1em;
+}
+
+.telegramBot {
+    color: var(--color2);
+    font-weight: 600;
+    font-family: var(--textFont);
+    font-size: 1em;
+    padding: 10px 20px;
+    border: 1px solid var(--color2);
+    border-radius: 10px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+}
+
+.telegramBot:hover {
+    background-color: var(--color2);
+    color: var(--color3)
+}
+
+@media screen and (max-width: 777px) {
+    .contacts span {
+        font-size: 0.7em;
+    }
+    
+    .contacts b {
+        font-size: 0.8em;
+    }
+    .stack {font-size: 0.8em}
+    .stack > span {font-size: 0.9em}
+    .telegramBot {
+        font-size: 0.9em;
+    }
+}
+
+@media screen and (max-width: 777px) {
+    .footer {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 0;
+    }
+    .contacts span {
+        font-size: 0.7em;
+    }
+    
+    .contacts b {
+        font-size: 0.8em;
+    }
+    .stack {font-size: 0.8em}
+    .stack > span {font-size: 0.9em}
+    .telegramBot {
+        font-size: 0.9em;
+    }
+}

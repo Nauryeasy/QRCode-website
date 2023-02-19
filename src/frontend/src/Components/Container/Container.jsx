@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classes from "./Container.module.css";
-const Container = ({ children, ...other }) => {
-    return <div className={classes.container} {...other}>{children}</div>;
+const Container = ({ children }) => {
+    return <div className={classes.container}>{children}</div>;
 };
 
 export default Container;

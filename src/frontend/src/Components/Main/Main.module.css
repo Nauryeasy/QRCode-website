@@ -1,0 +1,112 @@
+.wrapper {
+    height: 100%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    align-self: center;
+    gap: 50px;
+    font-family: var(--textFont);
+    font-size: 1.3em;
+}
+
+.wrapper>div:nth-child(odd) {
+    align-self: flex-start;
+}
+
+.wrapper>div:nth-child(even) {
+    align-self: flex-end;
+}
+
+.wrapper>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    gap: 50px;
+}
+
+.wrapper>div>p {
+    font-family: var(--textFont);
+    font-size: 1.2em;
+    font-weight: 500;
+    color: var(--color0);
+}
+
+.wrapper img {
+    width: 200px;
+    height: 200px;
+}
+
+.letsgo {
+    font-size: 2em;
+    border: 2px solid var(--color1);
+    border-radius: 20px;
+    padding: 20px;
+    text-decoration: none;
+    transition: opacity 0.2s ease, ;
+    margin-top: 10px;
+}
+
+.letsgo:hover {
+    opacity: 0.8
+}
+
+.letsgo:active {
+    transition: none;
+    opacity: 1;
+}
+
+@media screen and (max-width: 1050px) {
+    .wrapper>div>p {
+        font-family: var(--textFont);
+        font-size: 1em;
+        font-weight: 500;
+        color: var(--color0);
+    }
+}
+
+@media screen and (max-width: 941px) {
+    .wrapper>div>p {
+        font-family: var(--textFont);
+        font-size: 1em;
+        font-weight: 500;
+        color: var(--color0);
+    }
+}
+
+@media screen and (max-width: 777px) {
+    .wrapper>div>p {
+        font-family: var(--textFont);
+        font-size: 0.9em;
+        font-weight: 500;
+        color: var(--color0);
+    }
+}
+
+@media screen and (max-width: 727px) {
+    .wrapper>div:nth-child(odd) {
+        flex-direction: column-reverse;
+        align-self: center;
+        gap: 30px;
+    }
+
+    .wrapper>div:nth-child(even) {
+        flex-direction: column;
+        align-self: center;
+        gap: 30px;
+    }
+    .wrapper img {
+        width: 80%;
+        height: 80%;
+    }
+    .wrapper>div>p {
+        text-align: center;
+    }
+    .letsgo {
+        padding: 20px;
+        font-size: 1.5em;
+    }
+}

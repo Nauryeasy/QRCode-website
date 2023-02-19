@@ -1,0 +1,35 @@
+.wrapper {
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.isGood {
+    width: 50px;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--textFont);
+    font-size: 2em;
+    color: white;
+}
+
+.isGood[data-isgood=true] {
+    background-color: var(--color6);
+}
+
+.isGood[data-isgood=false] {
+    background-color: var(--color4);
+}
+
+.name {
+    padding: 0 15px;
+    min-width: 350px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--textFont);
+}

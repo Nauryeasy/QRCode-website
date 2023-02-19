@@ -1,0 +1,29 @@
+.windowSpinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    transition: opacity 200ms ease;
+}
+
+.windowSpinnerEnter {
+    opacity: 0;
+}
+
+.windowSpinnerEnterActive {
+    opacity: 1;
+}
+
+.windowSpinnerExit {
+    opacity: 0;
+}
+
+.windowSpinnerExitActive {
+    opacity: 0;
+}

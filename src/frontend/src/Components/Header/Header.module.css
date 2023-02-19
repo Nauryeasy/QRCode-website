@@ -1,11 +1,13 @@
 .header {
-    background-color: var(--color1);
     width: 100%;
     position: fixed;
     z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 10px 15px;
+    background-color: var(--color3);
+    box-shadow: 0px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
 
 .container {
@@ -26,12 +28,91 @@
 .navbarItem,
 .navbarItem>a {
     font-family: var(--textFont);
-    font-weight: bolder;
-    color: var(--color4);
+    color: var(--color0);
+    font-size: 0.9em;
     text-decoration: none;
     text-transform: uppercase;
+    vertical-align: middle;
+    text-align: center;
 }
 
 .navbarItem>a:hover {
+    color: var(--color1);
+}
+
+.navbarLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.navbarLogo:hover {
+    height: 100%;
+    filter: hue-rotate(20deg);
+}
+
+.navbarLogo img {
+    object-fit: contain;
+    height: 2em;
+}
+
+.burgerWrapper {
+    display: none;
+    position: relative;
+    width: 36px;
+    height: 36px;
+    justify-self: flex-end;
+}
+
+.burgerWrapper {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.burgerNavbarList {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.burgerNavbarItem {
+    position: relative;
+    padding: 15px 0;
+}
+
+.burgerNavbarItem > * {
     color: var(--color3);
+    text-decoration: none;
+    font-family: var(--textFont);
+    font-weight: 500;
+    font-size: 1.3em;
+    text-align: center;
+}
+
+.burgerNavbarItem:not(:last-child) > *::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    background-color: var(--color2);
+    bottom: 0px;
+    left: 0px;
+    height: 2px;
+}
+
+
+.burgerNavbarItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 777px) {
+    .burgerWrapper {
+        display: block;
+    }
+
+    .navbarList>*:not(.navbarLogo) {
+        display: none;
+    }
 }

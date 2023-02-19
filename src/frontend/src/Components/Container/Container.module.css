@@ -1,7 +1,9 @@
 .container {
+    margin: 0 auto;
     display: flex;
-    height: 100%;
     flex-direction: column;
     max-width: var(--containerWidth);
     width: 100%;
+    min-height: 100%;
+    padding: 120px 10px 160px 10px;
 }

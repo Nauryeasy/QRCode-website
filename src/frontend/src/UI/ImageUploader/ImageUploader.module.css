@@ -8,7 +8,6 @@
     position: relative;
     font-family: var(--textFont);
     font-size: 1.8em;
-    color: var(--color2)
 }
 
 .add {
@@ -20,7 +19,7 @@
     border: none;
     border-radius: 50px;
     border: 4px dashed var(--color1);
-    background-color: var(--color4);
+    background-color: var(--color3);
     border-radius: 50px;
     padding: 50px;
     transition: opacity 0.1s ease;
@@ -35,7 +34,8 @@
 }
 
 .image {
-    max-width: 80%;
+    max-width: 600px;
+    max-height: 300px;
     object-fit: contain;
 }
 
@@ -53,14 +53,58 @@
     gap: 20px;
 }
 
+/* .imageRemove {
+    border: 3px solid var(--color4);
+    color: var(--color4);
+}
+
+.imageUpdate {
+    border: 2px solid var(--color5);
+    color: var(--color5);
+}
+
+.imageOk {
+    border: 2px solid var(--color6);
+    color: var(--color6);
+} */
+
+.imageRemove {
+    background-color: var(--color4);
+    color: var(--color3);
+}
+
+.imageUpdate {
+    background-color: var(--color5);
+    color: var(--color3);
+}
+
+.imageOk {
+    background-color: var(--color6);
+    color: var(--color3);
+}
 
 .imageRemove,
 .imageUpdate,
 .imageOk {
-    background-color: transparent;
+    /* background-color: transparent; */
+    border: none;
     outline: none;
-    border: 1px solid var(--color2);
-    color: var(--color1)
+    padding: 5px 15px;
+    border-radius: 10px;
+    transition: opacity 0.1s ease;
+    cursor: pointer;
+}
+
+.imageRemove:hover,
+.imageUpdate:hover,
+.imageOk:hover {
+    opacity: 0.7;
+}
+
+.imageRemove:active,
+.imageUpdate:active,
+.imageOk:active {
+    opacity: 1;
 }
 
 .text {

@@ -28,14 +28,14 @@
     height: 100%;
     outline: none;
     border: 1px solid var(--color1);
-    background-color: var(--color4);
+    background-color: var(--color3);
     color: var(--color0);
     padding: 10px 15px;
     transition: border 0.3s ease;
 }
 
 .input[data-invalidurl=true] {
-    border: 1px solid var(--color5);
+    border: 1px solid var(--color4);
 }
 
 .input::placeholder {
@@ -48,7 +48,7 @@
     outline: none;
     border: 1px solid var(--color1);
     background-color: var(--color1);
-    color: var(--color4);
+    color: var(--color3);
     font-family: var(--textFont);
     font-weight: bolder;
     text-align: center;
@@ -56,14 +56,14 @@
 }
 
 .inputAccept:disabled {
-    background-color: var(--color5);
-    border: 1px solid var(--color5);
+    background-color: var(--color4);
+    border: 1px solid var(--color4);
 }
 
-.inputAccept:active {
+.inputAccept:not(:disabled):active {
     transition: none;
-    background-color: var(--color0);
-    border: 1px solid var(--color0);
+    background-color: var(--color2);
+    border: 1px solid var(--color2);
 }
 
 .text {

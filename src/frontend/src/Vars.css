@@ -1,10 +1,11 @@
 html {
-    --color0: #4A578A;
-    --color1: #7286D3;
-    --color2: #8EA7E9;
-    --color3: #E5E0FF;
-    --color4: #FFF2F2;
-    --color5: lightcoral;
+    --color0: #20242c;
+    --color1: #7a26c1;
+    --color2: #6936f5;
+    --color3: #fbfcf8;
+    --color4: #c34a43;
+    --color5: #F99E1E;
+    --color6: #51A351;
     --textFont: 'Roboto', sans-serif;
     --containerWidth: 1280px;
 }
