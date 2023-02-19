@@ -7,9 +7,9 @@ const Footer = () => {
             <div className={classes.footer}>
                 <div className={classes.contacts}>
                     <b>Made by:</b>
-                    <span>Alexander Plusnin (FrontEnd)</span>
-                    <span>Kirill asdasd (BackEnd)</span>
-                    <span>Ivan Karavaev (BackEnd)</span>
+                    <span>Plusnin Alexander (FrontEnd)</span>
+                    <span>Ilin Kirill (BackEnd)</span>
+                    <span>Karavaev Ivan (BackEnd)</span>
                 </div>
 
                 <div className={classes.telegramBot}>Telegram Bot</div>

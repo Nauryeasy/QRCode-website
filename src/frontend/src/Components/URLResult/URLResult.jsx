@@ -81,7 +81,6 @@ const URLResult = () => {
         }, 200);
         return () => clearTimeout(timeOutId);
     }, [email]);
-
     return (
         <div className={classes.wrapper}>
             <div className={classes.statisticsWrapper}>
@@ -134,7 +133,7 @@ const URLResult = () => {
                 <div className={classes.reviewsTitle}>
                     Отзывы людей об этом URL (всего: {count_reviews}):
                 </div>
-                {!reviews ? (
+                {reviewsState.length !== 0 ? (
                     <Pagination data={reviewsState} />
                 ) : (
                     <div className={classes.noreviews}>Пока отзывов нет</div>

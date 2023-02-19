@@ -5,7 +5,8 @@ import classes from "./Pagination.module.css";
 
 function Pagination({ data }) {
     const [itemOffset, setItemOffset] = useState(0);
-    const [currentItems, setCurrentItems] = useState([]);
+    const [currentItems, setCurrentItems] = useState(
+        data);
     const [pageCount, setPageCount] = useState(0);
     const itemsPerPage = 4;
 
@@ -19,7 +20,7 @@ function Pagination({ data }) {
         const newOffset = (event.selected * itemsPerPage) % data.length;
         setItemOffset(newOffset);
     };
-
+    console.log(currentItems)
     return (
         <div className={classes.wrapper}>
             <div>
