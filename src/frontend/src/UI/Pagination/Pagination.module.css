@@ -22,7 +22,11 @@
 }
 
 .pagination .pageNum:hover {
-    background-color: #548108;
+    background-color: var(--color2);
     color: white
 }
 
+.active {
+    background-color: var(--color2);
+    color: white
+}

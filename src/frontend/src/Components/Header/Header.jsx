@@ -11,7 +11,7 @@ import "./Burger.css";
 // ]
 
 const Header = ({ navbar, onChange, setIsLoading }) => {
-    const [menuOpen, setMenuOpen] = useState(false)
+    const [menuOpen, setMenuOpen] = useState(false);
     return (
         <div className={classes.header}>
             <div className={classes.container}>
@@ -27,7 +27,12 @@ const Header = ({ navbar, onChange, setIsLoading }) => {
                     {navbar.map((elem) => (
                         <li
                             key={elem.title}
-                            onClick={onChange}
+                            onClick={() => {
+                                window.scrollTo({
+                                    top: 0,
+                                    behavior: "smooth",
+                                });
+                            }}
                             className={classes.navbarItem}>
                             <NavLink to={elem.link}>{elem.title}</NavLink>
                         </li>
@@ -35,19 +40,30 @@ const Header = ({ navbar, onChange, setIsLoading }) => {
                 </ul>
             </div>
             <div className={classes.burgerWrapper}>
-                    <Menu onClose={ () => setMenuOpen(false) }  onOpen={() => setMenuOpen(true)} isOpen={menuOpen} right overlayClassName="bm-custom-overlay">
-                        <ul className={classes.burgerNavbarList}>
-                            {navbar.map((elem) => (
-                                <li
-                                    key={elem.title}
-                                    onClick={() => setMenuOpen(false)}
-                                    className={classes.burgerNavbarItem}>
-                                    <NavLink to={elem.link}>{elem.title}</NavLink>
-                                </li>
-                            ))}
-                        </ul>
-                    </Menu>
-                </div>
+                <Menu
+                    onClose={() => setMenuOpen(false)}
+                    onOpen={() => setMenuOpen(true)}
+                    isOpen={menuOpen}
+                    right
+                    overlayClassName="bm-custom-overlay">
+                    <ul className={classes.burgerNavbarList}>
+                        {navbar.map((elem) => (
+                            <li
+                                key={elem.title}
+                                onClick={() => {
+                                    setMenuOpen(false);
+                                    window.scrollTo({
+                                        top: 0,
+                                        behavior: "smooth",
+                                    });
+                                }}
+                                className={classes.burgerNavbarItem}>
+                                <NavLink to={elem.link}>{elem.title}</NavLink>
+                            </li>
+                        ))}
+                    </ul>
+                </Menu>
+            </div>
         </div>
     );
 };

@@ -30,6 +30,7 @@ const QRChecker = () => {
                 const statistic = res.data.statistic;
                 const reviews = res.data.reviews;
                 const count_reviews = res.data.count_reviews;
+                navigate('/URLResult?statistic=' + statistic + '&reviews=' + reviews + '&count_reviews=' + count_reviews)
             })
             .catch((error) => {
                 onError(error);

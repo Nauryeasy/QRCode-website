@@ -3,9 +3,11 @@ import classes from "./URLChecker.module.css";
 import { NotificationManager } from "react-notifications";
 import axios from "axios";
 import { isLoadingContext } from "../../context";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import LoadingScreen from "../../UI/LoadingScreen/LoadingScreen";
 const URLChecker = () => {
+    const navigate = useNavigate();
+
     const [input, setInput] = useState("");
     const [isValidUrl, setIsValidUrl] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
@@ -21,12 +23,24 @@ const URLChecker = () => {
         }
     }
     function onOk(res) {
-        console.log(res.data)
+        console.log(res.data);
         setIsLoading(false);
-        if (!res.data) return NotificationManager.error("Пустой ответ ¯\_(ツ)_/¯", "Ошибка");
+        if (!res.data)
+            return NotificationManager.error(
+                "Пустой ответ ¯_(ツ)_/¯",
+                "Ошибка",
+            );
         const statistic = res.data.statistic;
         const reviews = res.data.reviews;
         const count_reviews = res.data.count_reviews;
+        navigate(
+            "/URLResult?statistic=" +
+                statistic +
+                "&reviews=" +
+                reviews +
+                "&count_reviews=" +
+                count_reviews,
+        );
     }
     function onError(err) {
         setIsLoading(false);

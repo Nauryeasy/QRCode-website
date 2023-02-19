@@ -9,7 +9,7 @@ const Footer = () => {
                     <b>Made by:</b>
                     <span>Alexander Plusnin (FrontEnd)</span>
                     <span>Kirill asdasd (BackEnd)</span>
-                    <span>Ivan asdasd (BackEnd)</span>
+                    <span>Ivan Karavaev (BackEnd)</span>
                 </div>
 
                 <div className={classes.telegramBot}>Telegram Bot</div>

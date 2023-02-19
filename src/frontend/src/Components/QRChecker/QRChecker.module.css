@@ -6,11 +6,10 @@
     align-items: center;
     justify-self: center;
     align-self: center;
-    padding: 60px 0 0 0;
 }
 
 @media screen and (max-width: 750px) {
-    .imageUploader {
-        display: none;
+    .wrapper {
+        padding: 0;
     }
 }

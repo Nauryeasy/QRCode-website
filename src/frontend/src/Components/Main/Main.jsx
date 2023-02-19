@@ -8,15 +8,16 @@ const Main = () => {
         <div className={classes.wrapper}>
             <div>
                 <p>
-                    URLChecker - инструмент, который поможет определить небезопасные сайты.
+                    URLChecker - инструмент, который поможет определить
+                    небезопасные сайты.
                 </p>
                 <img src="https://img.freepik.com/free-vector/cute-hacker-operating-laptop-cartoon-vector-icon-illustration-people-technology-icon-isolated-flat_138676-7079.jpg?w=2000" />
             </div>
             <div>
                 <img src="https://soldimarketing.ru/upload/article/url-kak-sozdat-pravilnyy-adres/url%20saita.jpg"></img>
                 <p>
-                    В два клика можно провести анализ какого-то URL и
-                    получить результаты.
+                    В два клика можно провести анализ какого-то URL и получить
+                    результаты.
                 </p>
             </div>
             <div>
@@ -33,7 +34,17 @@ const Main = () => {
                     инструментарий нашего сервиса у себя в проектах.
                 </p>
             </div>
-            <Link to='/checkURL' className={classes.letsgo}>Попробуйте сами!</Link>
+            <Link
+                to="/checkURL"
+                className={classes.letsgo}
+                onClick={() => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth",
+                    });
+                }}>
+                Попробуйте сами!
+            </Link>
         </div>
     );
 };
