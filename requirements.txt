@@ -1,0 +1,9 @@
+django
+req
+requests
+ssl
+django-cors-headers
+pillow
+opencv-python
+pyzbar
+http
