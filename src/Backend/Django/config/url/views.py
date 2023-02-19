@@ -14,7 +14,7 @@ def processing_url(request):
     if request.method == 'POST':
         url = request.POST.get('url')
         if len(url) == 0:
-            return JsonResponse({"error": 'Link is null error'})
+            return HttpResponseBadRequest({"error": 'Link is null error'})
         else:
             for link in link_list:
                 if link.url == url:
@@ -30,7 +30,7 @@ def processing_url(request):
             try:
                 res = check_url.check_link(url)
             except:
-                return JsonResponse({"error": "Invalid link"})
+                return HttpResponseBadRequest({"error": "Invalid link"})
         a = len(need_reviews)
     print(res)
     print(need_reviews)
@@ -55,14 +55,14 @@ def add_review(request):
                         )
                         new_review.save()
                     except:
-                        return JsonResponse({'error': 'Invalid form'})
+                        return HttpResponseBadRequest({'error': 'Invalid form'})
                     flag = False
                 else:
-                    return JsonResponse({"error": "Second review error"})
+                    return HttpResponseBadRequest({"error": "Second review error"})
     else:
-        return JsonResponse({'error': 'Invalid email'})
+        return HttpResponseBadRequest({'error': 'Invalid email'})
     if flag:
-        return JsonResponse({'error': 'Dont found url'})
+        return HttpResponseBadRequest({'error': 'Dont found url'})
     return JsonResponse({'error': 'Add ok!'})
 
 
