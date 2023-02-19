@@ -58,7 +58,8 @@ def add_review(request):
 @csrf_exempt
 def get_reviews(request):
     links_list = notable_links.objects.all()
-    url = request.GET.get("url")
+    url = request.GET.get("url")[0]
+    print(request.GET)
     for link in links_list:
         if link.url == url:
             flag, need_reviews, reviews_list = False, {}, reviews.objects.filter(id_url=link.id)
