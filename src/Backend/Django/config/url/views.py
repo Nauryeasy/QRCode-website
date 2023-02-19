@@ -17,8 +17,8 @@ def processing_url(request):
             for link in link_list:
                 if link.url == url:
                     flag, need_reviews, reviews_list = False, {}, reviews.objects.filter(id_url=link.id)
-                    need_reviews = {str(i): {"email": review.email_author, "comment": review.review} for i, review in
-                                    enumerate(reviews_list)}
+                    need_reviews = [{"email": review.email_author, "comment": review.review} for review in
+                                    reviews_list]
                 break
             if flag:
                 new_url, need_reviews = notable_links(
@@ -35,16 +35,35 @@ def processing_url(request):
 
 @csrf_exempt
 def add_review(request):
+    flag = True
     review_data = request.POST
     links_list = notable_links.objects.all()
     for link in links_list:
         if review_data.get("url") == link.url:
-            new_review = reviews(
-                id_url=link.id,
-                email_author=review_data.get("email"),
-                review=review_data.get("review")
-            )
-            new_review.save()
-            reviews_list = reviews.objects.filter(id_url=link.id)
-            need_reviews = {str(i): {"email": review.email_author, "comment": review.review} for i, review in enumerate(reviews_list)}
-    return JsonResponse(need_reviews)
+            try:
+                new_review = reviews(
+                    id_url=link.id,
+                    email_author=review_data.get("email"),
+                    review=review_data.get("review")
+                )
+                new_review.save()
+            except:
+                return JsonResponse({'error': 'Invalid form'})
+            flag = False
+    if flag:
+        return JsonResponse({'error': 'Dont found url'})
+    return JsonResponse({'error': 'Add ok!'})
+
+
+@csrf_exempt
+def get_reviews(request):
+    links_list = notable_links.objects.all()
+    url = request.GET.get("url")
+    for link in links_list:
+        if link.url == url:
+            flag, need_reviews, reviews_list = False, {}, reviews.objects.filter(id_url=link.id)
+            need_reviews = [{"email": review.email_author, "comment": review.review} for review in
+                            reviews_list]
+        break
+
+    return JsonResponse({"reviews": need_reviews})
