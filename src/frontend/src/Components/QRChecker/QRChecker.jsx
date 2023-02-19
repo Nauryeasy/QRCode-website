@@ -26,11 +26,22 @@ const QRChecker = () => {
             )
             .then((res) => {
                 setIsLoading(false);
-                if (!res.data) return NotificationManager.error("Пустой ответ ¯\_(ツ)_/¯", "Ошибка");
+                if (!res.data)
+                    return NotificationManager.error(
+                        "Пустой ответ ¯_(ツ)_/¯",
+                        "Ошибка",
+                    );
                 const statistic = res.data.statistic;
                 const reviews = res.data.reviews;
                 const count_reviews = res.data.count_reviews;
-                navigate('/URLResult?statistic=' + statistic + '&reviews=' + reviews + '&count_reviews=' + count_reviews)
+                navigate(
+                    "/URLResult?statistic=" +
+                        JSON.parse(statistic) +
+                        "&reviews=" +
+                        JSON.parse(reviews) +
+                        "&count_reviews=" +
+                        JSON.parse(count_reviews),
+                );
             })
             .catch((error) => {
                 onError(error);
