@@ -12,6 +12,7 @@ const URLResult = () => {
     const reviews = JSON.parse(params.get("reviews"));
     const count_reviews = JSON.parse(params.get("count_reviews"));
     const url = JSON.parse(params.get("url"));
+    const image = JSON.parse(params.get("image"));
 
     const [email, setEmail] = useState("");
     const [text, setText] = useState("");

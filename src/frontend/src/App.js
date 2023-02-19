@@ -14,6 +14,7 @@ import PaginatedItems from "./UI/Pagination/Pagination";
 import Comments from "./UI/Pagination/Pagination";
 import QRResult from "./Components/QRResult/QRResult";
 import Footer from "./Components/Footer/Footer";
+import API from "./Components/API/API";
 
 function App() {
 
@@ -34,7 +35,7 @@ function App() {
                         <Route path="/main" element={<Main />} />
                         <Route path="/checkQR" element={<QRChecker />} />
                         <Route path="/checkURL" element={<URLChecker />} />
-                        <Route path="/api" element={<div>api</div>} />
+                        <Route path="/api" element={<API />} />
                         <Route
                             path="*"
                             element={<Navigate to="/main" replace />}

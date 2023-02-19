@@ -1,0 +1,77 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+
+    --jsonColor: rgba(6, 87, 245, 0.2);
+
+}
+
+.module {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: relative;
+    padding-bottom: 18px;
+}
+
+.module:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+
+    height: 2px;
+    background-color: var(--color0);
+    bottom: -8px;
+
+    left: 0;
+}
+
+.url {
+    font-family: var(--textFont);
+    font-size: 1.4em;
+}
+
+.title {
+    font-family: var(--textFont);
+    font-size: 2em;
+}
+
+.subtitle {
+    font-family: var(--textFont);
+    font-size: 1.2em;
+}
+
+.json {
+    padding: 4px;
+    gap: 5px;
+}
+
+.json>span {
+    background-color: var(--jsonColor);
+}
+
+.varsExplain {
+    list-style: none;
+    font-family: var(--textFont);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.varsExplain>li>span {
+    font-size: 1.1em;
+}
+
+.varsExplain>li>span:first-child {
+    color: brown;
+    padding-right: 8px;
+}
+
+.varsExplain>li>span:last-child {
+    color: var(--color6);
+    padding-left: 8px;
+}

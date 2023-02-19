@@ -1,0 +1,45 @@
+.navbarList {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px
+}
+
+.navbarItem,
+.navbarItem>a {
+    font-family: var(--textFont);
+    color: var(--color0);
+    font-size: 0.9em;
+    text-decoration: none;
+    text-transform: uppercase;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.navbarItem>a:hover {
+    color: var(--color1);
+}
+
+.navbarLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.navbarLogo:hover {
+    height: 100%;
+    filter: hue-rotate(20deg);
+}
+
+.navbarLogo img {
+    object-fit: contain;
+    height: 2em;
+}
+
+@media screen and (max-width: 777px) {
+    .navbarList > *:not(.navbarLogo) {
+        display: none;
+    }
+}

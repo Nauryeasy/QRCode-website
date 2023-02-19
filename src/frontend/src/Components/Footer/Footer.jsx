@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./Footer.module.css";
 
+// Футер
 const Footer = () => {
     return (
         <div className={classes.wrapper}>
@@ -13,7 +14,7 @@ const Footer = () => {
                 </div>
 
                 <div className={classes.telegramBot}>Telegram Bot</div>
-
+                
                 <div className={classes.stack}>
                     <span>Django</span> (Python), <span>SQLite</span>,{" "}
                     <span>React</span> (JS)

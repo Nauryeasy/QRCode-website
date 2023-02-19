@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./URLChecker.module.css";
 import { NotificationManager } from "react-notifications";
 import axios from "axios";
-import { isLoadingContext } from "../../context";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../../UI/LoadingScreen/LoadingScreen";
 const URLChecker = () => {
     const navigate = useNavigate();
@@ -27,7 +26,7 @@ const URLChecker = () => {
         setIsLoading(false);
         if (!res.data)
             return NotificationManager.error(
-                "Пустой ответ ¯\_(ツ)_/¯",
+                "Пустой ответ ¯_(ツ)_/¯",
                 "Ошибка",
             );
         if (
