@@ -1,0 +1,77 @@
+.sendOurReviewWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sendOurReviewAreaWrapper {
+    position: relative;
+    width: 100%;
+}
+
+.sendOurReviewArea {
+    min-width: 50%;
+    width: 100%;
+    height: 200px;
+    outline: none;
+    border: 1px solid var(--color1);
+    background-color: var(--color3);
+    color: var(--color0);
+    padding: 10px 15px;
+    transition: border 0.3s ease;
+    resize: vertical;
+    position: relative;
+}
+
+.sendOurReviewArea::placeholder {
+    opacity: 0.7;
+}
+
+.sendOurReview {
+    height: 50px;
+    outline: none;
+    border: 1px solid var(--color1);
+    background-color: var(--color1);
+    color: var(--color3);
+    font-family: var(--textFont);
+    font-weight: bolder;
+    text-align: center;
+    transition: border 0.3s ease, background-color 0.3s ease;
+}
+
+.sendOurReview:disabled {
+    background-color: var(--color4);
+    border: 1px solid var(--color4);
+}
+
+.sendOurReview:not(:disabled):active {
+    transition: none;
+    background-color: var(--color2);
+    border: 1px solid var(--color2);
+}
+
+.emailInput {
+    height: 50px;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid var(--color2);
+}
+
+.emailInput:focus {
+    outline: none;
+
+}
+
+.emailInput[data-invalidemail=true] {
+    border: 1px solid var(--color4);
+}
+
+.wordsLength {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.wordsLength.over {
+    color: var(--color4)
+}

@@ -8,11 +8,7 @@ import "react-notifications/lib/notifications.css";
 import QRChecker from "./Components/QRChecker/QRChecker";
 import URLChecker from "./Components/URLChecker/URLChecker";
 import Main from "./Components/Main/Main";
-import { useEffect, useState } from "react";
 import URLResult from "./Components/URLResult/URLResult";
-import PaginatedItems from "./UI/Pagination/Pagination";
-import Comments from "./UI/Pagination/Pagination";
-import QRResult from "./Components/QRResult/QRResult";
 import Footer from "./Components/Footer/Footer";
 import API from "./Components/API/API";
 
@@ -41,9 +37,7 @@ function App() {
                             element={<Navigate to="/main" replace />}
                         />
                         <Route path="/URLResult" element={<URLResult/>} />
-                        <Route path="/QRResult" element={<QRResult/>} />
                     </Routes>
-                {/* <WindowSpinner isLoading={isLoading} /> */}
                 <NotificationContainer></NotificationContainer>
             </Container>
             <Footer/>

@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react";
 import classes from "./URLChecker.module.css";
 import { NotificationManager } from "react-notifications";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../../UI/LoadingScreen/LoadingScreen";
-const URLChecker = () => {
+import { postUrl } from "../../utils/http";
+
+// Страница с загрузкой URL
+const URLChecker = ({setReviewsState}) => {
     const navigate = useNavigate();
 
+    // Инпут с URL
     const [input, setInput] = useState("");
+
+    // Состояние, показывающее валидность введенного URL
     const [isValidUrl, setIsValidUrl] = useState(true);
+
+    // Экран загрузки
     const [isLoading, setIsLoading] = useState(false);
+
+    // Если URL валидный
     function checkIsValidUrl(url) {
         const expression =
             /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
@@ -21,23 +30,28 @@ const URLChecker = () => {
             return false;
         }
     }
+
     function onOk(res) {
-        console.log(res.data);
         setIsLoading(false);
+
         if (!res.data)
             return NotificationManager.error(
                 "Пустой ответ ¯_(ツ)_/¯",
                 "Ошибка",
             );
+        // Если какого-то параметра анализа нет
         if (
             res.data.statistic === undefined ||
             res.data.reviews === undefined ||
             res.data.count_reviews === undefined
         )
             return NotificationManager.error("Некорректный ответ", "Ошибка");
+
         const statistic = res.data.statistic;
         const reviews = res.data.reviews;
         const count_reviews = res.data.count_reviews;
+
+        // Перекинуть пользователя на страницу с результатами анализа
         navigate(
             "/URLResult?statistic=" +
                 JSON.stringify(statistic) +
@@ -49,34 +63,22 @@ const URLChecker = () => {
                 JSON.stringify(input),
         );
     }
+
+    // При ошибке во время отправления запроса
     function onError(err) {
         setIsLoading(false);
         NotificationManager.error(String(err), "Ошибка");
     }
-    function onAcceptURL() {
+
+    // При нажатии на кнопку отправления
+    function onSendURL() {
         if (input === "" || !checkIsValidUrl(input))
             return NotificationManager.error("Неправильный URL", "Ошибка");
         setIsLoading(true);
-        axios
-            .post(
-                process.env.REACT_APP_URL_SEND_ADDRESS,
-                {
-                    url: input,
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                },
-            )
-            .then((response) => {
-                onOk(response);
-            })
-            .catch((error) => {
-                onError(error);
-            });
+        postUrl(input, onOk, onError);
     }
 
+    // Перед тем, как проверить валидность URL в инпуте, подождать 200мс после окончания набора
     useEffect(() => {
         const timeOutId = setTimeout(() => {
             if (checkIsValidUrl(input) || input === "") {
@@ -106,7 +108,7 @@ const URLChecker = () => {
                 <button
                     disabled={!isValidUrl}
                     className={classes.inputAccept}
-                    onClick={onAcceptURL}>
+                    onClick={onSendURL}>
                     {isValidUrl ? "➤" : "✕"}
                 </button>
             </div>
