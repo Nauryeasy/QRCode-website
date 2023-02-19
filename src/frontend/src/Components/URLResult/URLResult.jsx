@@ -3,87 +3,89 @@ import Pagination from "../../UI/Pagination/Pagination";
 import Comments from "../../UI/Pagination/Pagination";
 import ReviewPane from "../../UI/ReviewPane/ReviewPane";
 import StatisticPane from "../../UI/StatisticPane/StatisticPane";
+import { NotificationManager } from "react-notifications";
+import axios from "axios";
 import classes from "./URLResult.module.css";
-const URLResult = ({ statistic, reviews, count_reviews }) => {
-    statistic = {
-        redirect: true,
-        https: false,
-        ssl: false,
-        suspicious: true,
-        suspicious_js: false,
-        "Long level": true,
-        Unreadability: true,
-    };
+const URLResult = () => {
+    const params = new URLSearchParams(document.location.search);
+    const statistic = JSON.parse(params.get("statistic"));
+    const reviews = JSON.parse(params.get("reviews"));
+    const count_reviews = JSON.parse(params.get("count_reviews"));
+    const url = JSON.parse(params.get("url"));
 
-    reviews = [
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment:
-                "text 11111111111111111111111111111111111111111111111111121222222222222222222222222222222222222222222commentaria",
-        },
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment: "text commentaria",
-        },
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment: "text commentaria",
-        },
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment: "text commentaria",
-        },
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment: "text commentaria",
-        },
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment: "text commentaria",
-        },
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment: "text commentaria",
-        },
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment: "text commentaria",
-        },
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment: "text commentaria",
-        },
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment: "text commentaria",
-        },
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment: "text commentaria",
-        },
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment: "text commentaria",
-        },
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment: "aatext commentaria",
-        },
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment: "text com123mentaria",
-        },
-        {
-            email: "jfgdkjfdkljkdfjg@gmailic.hui",
-            comment: "text commezxcntaria",
-        },
-    ];
+    const [email, setEmail] = useState("");
+    const [text, setText] = useState("");
+    const [isValidEmail, setIsValidEmail] = useState(true);
+    const [reviewsState, setReviewsState] = useState(reviews);
 
-    const [ourReview, setOurReview] = useState("");
+    function checkIsValidEmail(email) {
+        const expression = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/gi;
+        const regex = new RegExp(expression);
+
+        if (email.match(regex)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onOk(res) {
+        setReviewsState([...reviewsState, { email: email, comment: text }]);
+        setText("");
+        setEmail("");
+        NotificationManager.success("Ваш отзыв был добавлен", "Успех");
+    }
+
+    function onError(err) {
+        NotificationManager.error(String(err), "Ошибка");
+    }
+
+    function addReview(url, email, text) {
+        if (email === "" || !checkIsValidEmail(email))
+            return NotificationManager.error("Неправильный EMAIL", "Ошибка");
+        if (text.length > 100)
+            return NotificationManager.error(
+                "Слишком большой текст (макс. 100 символов)",
+                "Ошибка",
+            );
+        if (text.length == 0)
+            return NotificationManager.error("Пустое сообщение", "Ошибка");
+        axios
+            .post(
+                process.env.REACT_APP_QR_ADD_REVIEWS,
+                {
+                    url: url,
+                    email: email,
+                    review: text,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                },
+            )
+            .then((response) => {
+                onOk(response);
+            })
+            .catch((error) => {
+                onError(error);
+            });
+    }
+
+    useEffect(() => {
+        const timeOutId = setTimeout(() => {
+            if (email === "" || checkIsValidEmail(email)) {
+                setIsValidEmail(true);
+            } else {
+                setIsValidEmail(false);
+            }
+        }, 200);
+        return () => clearTimeout(timeOutId);
+    }, [email]);
 
     return (
         <div className={classes.wrapper}>
             <div className={classes.statisticsWrapper}>
+                <h2>{url}</h2>
                 <StatisticPane
                     isGood={!statistic.redirect}
                     name={
@@ -130,19 +132,51 @@ const URLResult = ({ statistic, reviews, count_reviews }) => {
             </div>
             <div className={classes.reviewsWrapper}>
                 <div className={classes.reviewsTitle}>
-                    Отзывы людей об этом URL:
+                    Отзывы людей об этом URL (всего: {count_reviews}):
                 </div>
-                <Pagination data={reviews} />
+                {!reviews ? (
+                    <Pagination data={reviewsState} />
+                ) : (
+                    <div className={classes.noreviews}>Пока отзывов нет</div>
+                )}
                 <div className={classes.sendOurReviewWrapper}>
                     <div className={classes.ourReviewTitle}>
                         Оставьте свой отзыв:
                     </div>
-                    <textarea
-                        className={classes.sendOurReviewArea}
-                        placeholder={"Крутой сайт!"}
-                        value={ourReview}
-                        onChange={(e) => setOurReview(e.target.value)}></textarea>
-                    <button className={classes.sendOurReview}>Отправить</button>
+
+                    <input
+                        data-invalidemail={!isValidEmail}
+                        onChange={(e) => {
+                            if (email === "") setIsValidEmail(false);
+                            setEmail(e.target.value);
+                        }}
+                        placeholder="example@gmail.com"
+                        className={classes.emailInput}
+                        value={email}></input>
+                    <div className={classes.sendOurReviewAreaWrapper}>
+                        <textarea
+                            className={classes.sendOurReviewArea}
+                            placeholder={"Крутой сайт!"}
+                            value={text}
+                            onChange={(e) =>
+                                setText(e.target.value)
+                            }></textarea>
+                        <div
+                            className={
+                                text.length >= 100
+                                    ? classes.wordsLength + " " + classes.over
+                                    : classes.wordsLength
+                            }>
+                            {text.length}/100
+                        </div>
+                    </div>
+
+                    <button
+                        className={classes.sendOurReview}
+                        disabled={!text.length >= 100 || !isValidEmail}
+                        onClick={() => addReview(url, email, text)}>
+                        Отправить
+                    </button>
                     <span></span>
                 </div>
             </div>

@@ -36,11 +36,11 @@ const QRChecker = () => {
                 const count_reviews = res.data.count_reviews;
                 navigate(
                     "/URLResult?statistic=" +
-                        JSON.parse(statistic) +
+                        JSON.stringify(statistic) +
                         "&reviews=" +
-                        JSON.parse(reviews) +
+                        JSON.stringify(reviews) +
                         "&count_reviews=" +
-                        JSON.parse(count_reviews),
+                        JSON.stringify(count_reviews),
                 );
             })
             .catch((error) => {
