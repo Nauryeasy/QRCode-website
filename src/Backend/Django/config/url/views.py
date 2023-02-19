@@ -1,3 +1,4 @@
+from django.db.models import QuerySet
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render
 import json
@@ -40,18 +41,23 @@ def add_review(request):
     flag = True
     review_data = request.POST
     links_list = notable_links.objects.all()
+
     for link in links_list:
         if review_data.get("url") == link.url:
-            try:
-                new_review = reviews(
-                    id_url=link.id,
-                    email_author=review_data.get("email"),
-                    review=review_data.get("review")
-                )
-                new_review.save()
-            except:
-                return JsonResponse({'error': 'Invalid form'})
-            flag = False
+            is_upload = reviews.objects.filter(email_author=review_data.get("email"), id_url=link.id)
+            if len(is_upload) == 0:
+                try:
+                    new_review = reviews(
+                        id_url=link.id,
+                        email_author=review_data.get("email"),
+                        review=review_data.get("review")
+                    )
+                    new_review.save()
+                except:
+                    return JsonResponse({'error': 'Invalid form'})
+                flag = False
+            else:
+                return JsonResponse({"error": "Second review error"})
     if flag:
         return JsonResponse({'error': 'Dont found url'})
     return JsonResponse({'error': 'Add ok!'})
