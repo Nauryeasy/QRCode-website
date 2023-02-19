@@ -30,6 +30,8 @@ def processing_url(request):
             except:
                 return JsonResponse({"error": "Invalid link"})
         a = len(need_reviews)
+    print(res)
+    print(need_reviews)
     return JsonResponse({"statistic": res, "reviews": need_reviews, "count_reviews": a})
 
 
